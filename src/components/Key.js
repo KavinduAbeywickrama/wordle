@@ -1,16 +1,20 @@
 import React, {useContext} from 'react'
-import { AppConext } from "../App";
-import Board from './Board';
+import { AppContext } from "../App";
 
 function Key({keyVal, bigKey}) {
-  const { board, setBoard, currAttempt, setCurrAttempt } = useContext(AppConext);
+  const { onDelete, onSelectLetter, onEnter } = useContext(AppContext);
 
   const selectLetter = () => {
-    const newBoard =[...board]
-    newBoard[currAttempt.currAttempt][currAttempt.letterPos] = keyVal;
-    setBoard(newBoard);
-    setCurrAttempt({...currAttempt, letterPos: currAttempt.letterPos + 1});
-  };
+    if(keyVal === "ENTER"){
+      onEnter();
+      
+    }else if(keyVal==="DELETE"){
+      onDelete();
+          
+    }else{
+      onSelectLetter(keyVal);  
+    }
+};
 
   return (
     <div className='key' id = {bigKey && "big"} onClick={selectLetter} >
